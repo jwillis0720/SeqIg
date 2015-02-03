@@ -1,2 +1,1 @@
-# seqan_ig
-immunoglobulin sequence analysis using seqan
+SeqIg - Immunoglobulin Rearrangement Software
