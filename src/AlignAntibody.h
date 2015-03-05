@@ -28,6 +28,7 @@ private:
     seqan::CharString _best_gene;
     TAlignmnet _best_align;
     
+
     //private methods
     void DoPairWiseLocalAgainstDb(seqan::CharString const &,
                                   seqan::Dna5String const &);

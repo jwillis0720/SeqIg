@@ -46,15 +46,21 @@ private:
     int _JGeneQueryStart;
     int _JGeneQueryEnd;
     
+    //raw seq
+    Tds _raw_sequence;
+
     //Newly assigned Variables
     int _VGeneQueryStartTranslation;
     Tds _EntireAntibodySeq;
     TAASeq _AbAASeq;
     
+    //private funcs
+    void _setVGeneQueryStartTranslation();
+
 public:
 
     //V and J
-    AntibodyJunction(AlignAntibody &, AlignAntibody &);
+    AntibodyJunction(AlignAntibody &, AlignAntibody &, Tds &);
     //V D and J
     AntibodyJunction(AlignAntibody &, AlignAntibody &, AlignAntibody &, Tds &);
     ~AntibodyJunction() {};

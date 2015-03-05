@@ -354,7 +354,7 @@ int main(int argc, char const ** argv)
         Tdbcontainer VGeneContainer = dbpaths.Vgene_files[best_v_family];
         AlignAntibody VGeneAlign(id, seq, VGeneContainer, options.verbose);
         
-        //Print bast alignment
+        //Print best alignment
         if(options.verbose)
             VGeneAlign.PrintBestAlignment();
         
@@ -365,7 +365,6 @@ int main(int argc, char const ** argv)
           JGeneAlign.PrintBestAlignment();
     
         //if heavy, align D gene too
-        
         if(options.chain == "heavy")
         {
             AlignAntibody DFamilyAlign(id, seq, DFamilyContainer, options.verbose);
