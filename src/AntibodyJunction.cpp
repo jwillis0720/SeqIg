@@ -5,14 +5,16 @@
 //  Created by Jordan Willis on 1/14/15.
 //
 //
-
 #include "AntibodyJunction.h"
 #include <seqan/translation.h>
 
 //Constructor One if we have just V and J Gene
-AntibodyJunction::AntibodyJunction(AlignAntibody & VGene, AlignAntibody & JGene, Tds & raw_sequence)
+AntibodyJunction::AntibodyJunction(AlignAntibody const & VGene, AlignAntibody const & JGene, Tds const & raw_sequence, bool const & verbose)
 {
-    //VGene Members Assignment From AlignAntibody Class
+    //Verbose
+	_verbose = verbose;
+
+	//VGene Members Assignment From AlignAntibody Class
     _VGeneAlignment = VGene.GetTopAlignment();
     _VGeneScore = VGene.GetTopScore();
     _VGeneGene = VGene.GetTopGene();
@@ -31,20 +33,24 @@ AntibodyJunction::AntibodyJunction(AlignAntibody & VGene, AlignAntibody & JGene,
     _JGeneQueryStart = JGene.GetBeginGeneMatch();
     _JGeneQueryEnd= JGene.GetEndQueryMatch();
 
+    _raw_sequence = raw_sequence;
     _setVGeneQueryStartTranslation();
 
 };
 
-AntibodyJunction::AntibodyJunction(AlignAntibody & VGene, AlignAntibody &JGene,AlignAntibody & DGene, Tds & raw_sequence)
-{
-    //VGene Members Assignment From AlignAntibody Class
+AntibodyJunction::AntibodyJunction(AlignAntibody const & VGene, AlignAntibody const & JGene,AlignAntibody const & DGene, Tds const & raw_sequence, bool const & verbose) {
+
+	//Verbose
+	_verbose = verbose;
+
+	//VGene Members Assignment From AlignAntibody Class
     _VGeneAlignment = VGene.GetTopAlignment();
     _VGeneScore = VGene.GetTopScore();
     _VGeneGene = VGene.GetTopGene();
     _VGeneGeneStart = VGene.GetBeginGeneMatch();
     _VGeneGeneEnd = VGene.GetEndGeneMatch();
     _VGeneQueryStart = VGene.GetBeginGeneMatch();
-    _VGeneQueryEnd= VGene.GetEndQueryMatch();
+    _VGeneQueryEnd = VGene.GetEndQueryMatch();
     
     //DGene Members Assignment From AlignAntibody Class
     _DGeneAlignment = DGene.GetTopAlignment();
@@ -66,14 +72,15 @@ AntibodyJunction::AntibodyJunction(AlignAntibody & VGene, AlignAntibody &JGene,A
     _JGeneQueryStart = JGene.GetBeginGeneMatch();
     _JGeneQueryEnd= JGene.GetEndQueryMatch();
 
-    Tds _raw_sequence = raw_sequence;
+    _raw_sequence = raw_sequence;
     _setVGeneQueryStartTranslation();
+    _setJunctions();
 
 };
 
-void AntibodyJunction::_setVGeneQueryStartTranslation(){
-    //This will go into its own fuction, but I need to make sure it translates first. It works great for the time being.
-    for(int i = _VGeneGeneStart, j = _VGeneQueryStart; i < _VGeneGeneEnd ; i++, j++)
+void AntibodyJunction::_setVGeneQueryStartTranslation() {
+
+	for(int i = _VGeneGeneStart, j = _VGeneQueryStart; i < _VGeneGeneEnd ; i++, j++)
     {
         if(i % 3 == 0)
         {
@@ -90,11 +97,25 @@ void AntibodyJunction::_setVGeneQueryStartTranslation(){
     }
     
     _EntireAntibodySeq = infix(_raw_sequence, _VGeneQueryStartTranslation, _JGeneQueryEnd);
-    std::cout << "V Gene Start " << _VGeneQueryStartTranslation << std::endl;;
-    std::cout << "Entire Antibody In Frame : " << _EntireAntibodySeq << std::endl;
+
+    if(_verbose)
+    {
+    	std::cout << "V Gene Start " << _VGeneQueryStartTranslation << std::endl;;
+    	std::cout << "Entire Antibody In Frame : " << _EntireAntibodySeq << std::endl;
+    }
+
     if (seqan::translate(_AbAASeq,_EntireAntibodySeq) != 0)
-        throw AntibodyJunctionException("Can't Translate Seqeuce");
+        throw AntibodyJunctionException("Can't Translate Sequence");
     
-    std::cout << "\n\n" << _AbAASeq.concat << std::endl;
-    
+    if(_verbose)std::cout << "\n\n" << _AbAASeq.concat << std::endl;
 };
+
+void AntibodyJunction::_setJunctions() {
+std::cout << "blah" << std::endl;
+
+
+}
+
+
+
+

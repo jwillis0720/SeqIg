@@ -1,15 +1,13 @@
-//
+#ifndef ANTIBODYJUNCTION_H_
+#define ANTIBODYJUNCTION_H_
+
+
 //  AntibodyJunction.h
 //  seqan_sandbox
 //
 //  Created by Jordan Willis on 1/14/15.
 //
 //
-
-#ifndef __seqan_sandbox__AntibodyJunction__
-#define __seqan_sandbox__AntibodyJunction__
-
-
 //#include <seqan/translation.h>
 #include <stdio.h>
 #include "AlignAntibody.h"
@@ -54,16 +52,23 @@ private:
     Tds _EntireAntibodySeq;
     TAASeq _AbAASeq;
     
+    //verbose
+    bool _verbose;
+
     //private funcs
     void _setVGeneQueryStartTranslation();
+    void _setJunctions();
 
 public:
 
     //V and J
-    AntibodyJunction(AlignAntibody &, AlignAntibody &, Tds &);
+    AntibodyJunction(AlignAntibody const &, AlignAntibody const &, Tds const &, bool const &);
     //V D and J
-    AntibodyJunction(AlignAntibody &, AlignAntibody &, AlignAntibody &, Tds &);
+    AntibodyJunction(AlignAntibody const &, AlignAntibody const &, AlignAntibody const &, Tds const &, bool const &);
     ~AntibodyJunction() {};
+
+
+
 };
 
 
@@ -77,4 +82,4 @@ public:
     const char *what() const throw() { return this->err_msg.c_str(); };
 };
 
-#endif /* defined(__seqan_sandbox__AntibodyJunction__) */
+#endif

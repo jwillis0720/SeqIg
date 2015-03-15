@@ -1,0 +1,20 @@
+!SESSION 2015-03-14 17:22:38.167 -----------------------------------------------
+eclipse.buildId=4.4.1.M20140925-0400
+java.version=1.8.0_31
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -keyring /Users/jordanwillis/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.cpp.product -keyring /Users/jordanwillis/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.core.net 1 0 2015-03-14 17:22:40.741
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16|vax.scripps.edu:9999|*.vax.scripps.edu:9999 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.core.resources 4 77 2015-03-14 17:23:24.793
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2015-03-14 17:23:24.793
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2015-03-14 17:23:24.793
+!MESSAGE /Users/jordanwillis/GitRepos/seqig_standalone/src overlaps the location of another project: 'src'
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-03-14 17:24:24.774
+!MESSAGE Indexed 'src' (5 sources, 179 headers) in 3.86 sec: 21,348 declarations; 45,021 references; 16 unresolved inclusions; 25 syntax errors; 376 unresolved names (0.56%)

@@ -33,6 +33,10 @@
 // ==========================================================================
 
 #include "boost/filesystem.hpp"
+//#include "boost/algorithm/string.hpp"
+
+#include <sstream>
+
 
 //Seqan Headers
 #include <seqan/basic.h>
@@ -84,7 +88,7 @@ inline TCMap GetDatabaseFiles(const std::string & db_path, const bool & verbose)
     for (boost::filesystem::directory_iterator itr(idbpath); itr != end_itr; ++itr)
     {
         // If it's not a directory, list it. If you want to list directories too, just remove this check.
-        if (is_regular_file(itr->path()))
+        if (boost::filesystem::is_regular_file(itr->path()))
         {
             // assign current file name to current_file and echo it out to the console.
             std::string current_file = itr->path().string();
@@ -157,7 +161,7 @@ void SetUpArgumentParser(seqan::ArgumentParser & parser)
     setRequired(parser, "f");
     
     //Set Database Default Values
-    setDefaultValue(parser, "database_path", "/Users/jordanwillis/Git_repos/seqan/seqig_data");
+    setDefaultValue(parser, "database_path", "/Users/jordanwillis/GitRepos/seqig_standalone/seqig_data");
     setDefaultValue(parser, "receptor", "Ig");
     setDefaultValue(parser, "chain", "heavy");
     setDefaultValue(parser, "species", "human");
@@ -313,6 +317,41 @@ int main(int argc, char const ** argv)
         DFamilyContainer = DGeneDB.GetDbContainer();
     }
     
+
+
+    //Got the properties container and it rocks
+    //Todo Put this in it's own function
+    TProperties VGenePropertiesContainer;
+
+    //Todo properties should come from argument
+    std::ifstream ifs("properties.txt");
+    std::string line;
+    while(std::getline(ifs,line))
+    {
+    	TSVector split_lines = Split(line,'\t');
+    	if(split_lines[0] == "#Gene") continue;
+    	VGenePropertiesContainer[split_lines[0]]["FR1s"] = atoi(split_lines[1].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["FR1e"] = atoi(split_lines[2].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["CDR1s"] = atoi(split_lines[3].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["CDR1e"] = atoi(split_lines[4].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["FR2s"] = atoi(split_lines[5].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["FR2e"] = atoi(split_lines[6].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["CDR2s"] = atoi(split_lines[7].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["CDR2e"] = atoi(split_lines[8].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["FR3s"] = atoi(split_lines[9].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["FR3e"] = atoi(split_lines[10].c_str());
+    	VGenePropertiesContainer[split_lines[0]]["CDR3s"] = atoi(split_lines[10].c_str());
+    }
+
+    TProperties::iterator itr1;
+    std::map<Tcs,int>::iterator itr2;
+    for(itr1 = VGenePropertiesContainer.begin(); itr1 != VGenePropertiesContainer.end(); itr1++){
+    	std::cout << "\n" << itr1->first << "\t";
+    	for(itr2 = itr1->second.begin() ; itr2 != itr1->second.end(); itr2++){
+    		std::cout << itr2->first << "\t" << itr2->second << "\t";
+    	}
+    }
+
     /////////////////
     //INPUT SECTION//
     /////////////////
@@ -323,7 +362,7 @@ int main(int argc, char const ** argv)
     
     //init an id and sequence variable to hold everything
     seqan::CharString id;
-    seqan::Dna5String seq;
+    Tds seq;
     seqan::SequenceStream seqStream(input_file_name);
     
     //See that we can open input file
@@ -381,7 +420,7 @@ int main(int argc, char const ** argv)
             
             try
             {
-                AntibodyJunction AJ(VGeneAlign, JGeneAlign, DFamilyAlign, seq);
+            	AntibodyJunction AJ(VGeneAlign,JGeneAlign, DFamilyAlign, seq, options.verbose);
             }catch(AntibodyJunctionException &msg) {
                 std::cerr << "Problem with id -> " << id << std::endl;
                 std::cerr << msg.what() << std::endl;

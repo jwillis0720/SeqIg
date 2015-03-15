@@ -40,16 +40,16 @@ public:
                       bool const &);
     
     //Getters
-    int GetTopScore();
-    TAlignmnet GetTopAlignment();
-    seqan::CharString GetTopGene();
-    int GetBeginQueryMatch();
-    int GetEndQueryMatch();
-    int GetBeginGeneMatch();
-    int GetEndGeneMatch();
+    int GetTopScore() const;
+    TAlignmnet GetTopAlignment() const;
+    seqan::CharString GetTopGene() const;
+    int GetBeginQueryMatch() const;
+    int GetEndQueryMatch() const;
+    int GetBeginGeneMatch() const;
+    int GetEndGeneMatch() const;
     
     //For verbose
-    void PrintBestAlignment();
+    void PrintBestAlignment() const;
 };
 
 #endif /* defined(__seqan_sandbox__AlignAntibody__) */

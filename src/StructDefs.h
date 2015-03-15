@@ -33,10 +33,8 @@
 // ==========================================================================
 
 #include <seqan/align.h>
-
-
-#ifndef SANDBOX_SEQIG_SANDBOX_APPS_SEQIG_STRUCTDEFS_H_
-#define SANDBOX_SEQIG_SANDBOX_APPS_SEQIG_STRUCTDEFS_H_
+#ifndef STRUCTDEFS_H_
+#define STRUCTDEFS_H_
 typedef seqan::CharString Tcs;
 typedef seqan::Dna5String Tds;
 typedef std::map<Tcs,Tds> Tdbcontainer;
@@ -46,6 +44,7 @@ typedef std::map<seqan::CharString,Tdbcontainer> TCMap;
 typedef TSMap::const_iterator TSMapIterator;
 typedef seqan::StringSet<seqan::String<seqan::AminoAcid>, seqan::Owner<seqan::ConcatDirect<> > > TAASeq;
 typedef std::vector<std::string> TSVector;
+typedef std::map<Tcs,std::map<Tcs,int> > TProperties;
 
 //alignment
 typedef seqan::Align<seqan::Dna5String,seqan::ArrayGaps> TAlignmnet;

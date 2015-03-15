@@ -79,43 +79,44 @@ void AlignAntibody::DoPairWiseLocalAgainstDb(seqan::CharString const & gene_id, 
 
 
 //GETTERS are all public
-int AlignAntibody::GetTopScore(){
+int AlignAntibody::GetTopScore() const
+{
     return _top_score;
 };
 
-TAlignmnet AlignAntibody::GetTopAlignment()
+TAlignmnet AlignAntibody::GetTopAlignment() const
 {
     return _best_align;
 }
 
-seqan::CharString AlignAntibody::GetTopGene()
+seqan::CharString AlignAntibody::GetTopGene() const
 {
     return _best_gene;
 }
 
-int AlignAntibody::GetBeginQueryMatch()
+int AlignAntibody::GetBeginQueryMatch() const
 {
     return clippedBeginPosition(row(_best_align , 0));
 };
 
-int AlignAntibody::GetEndQueryMatch()
+int AlignAntibody::GetEndQueryMatch() const
 {
     return (clippedEndPosition(row(_best_align, 0))-1);
 };
 
-int AlignAntibody::GetBeginGeneMatch()
+int AlignAntibody::GetBeginGeneMatch() const
 {
     return clippedBeginPosition(row(_best_align , 1));
 };
 
-int AlignAntibody::GetEndGeneMatch()
+int AlignAntibody::GetEndGeneMatch() const
 {
     return (clippedEndPosition(row(_best_align, 1))-1);
 };
 
 
 //One last method can print the summary of the alignment for verbose output
-void AlignAntibody::PrintBestAlignment (){
+void AlignAntibody::PrintBestAlignment () const{
     std::cout << "The best score is ->" << _top_score << std::endl;
     std::cout << "The best gene is ->" << _best_gene << std::endl;
     std::cout << "The best align is ->\n\n" << _best_align << std::endl;

@@ -2,11 +2,11 @@
 GXX = clang++
 CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix build/,$(notdir $(CPP_FILES:.cpp=.o)))
-CC_FLAGS += -MMD -Wall
+CC_FLAGS += -MMD -Wall -Wno-deprecated-declarations
 CC_FLAGS += -g
 CC_FLAGS +=-I./include/
 CC_FLAGS +=-I/usr/local/include/
-LD_FLAGS += -lboost_filesystem -lboost_system -L./lib/
+LD_FLAGS += -lboost_filesystem -lboost_system -L./lib/ 
 -include $(OBJ_FILES:.o=.d)
 
 default: all
