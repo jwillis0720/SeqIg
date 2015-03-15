@@ -33,7 +33,7 @@
 // ==========================================================================
 
 #include "boost/filesystem.hpp"
-//#include "boost/algorithm/string.hpp"
+#include "boost/algorithm/string.hpp"
 
 #include <sstream>
 
@@ -57,24 +57,6 @@ inline bool check_if_dir_exists (const std::string &name) {
     return (stat (name.c_str(), &buffer) == 0);
 }
 
-
-inline TSVector &split(const std::string &s, char delim, std::vector<std::string> &elems) {
-    std::stringstream ss(s);
-    std::string item;
-    while (std::getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
-    return elems;
-};
-
-
-inline TSVector Split(const std::string &s, char delim) {
-    TSVector elems;
-    split(s, delim, elems);
-    return elems;
-};
-
-
 inline TCMap GetDatabaseFiles(const std::string & db_path, const bool & verbose)
 {
     //You could put any file path in here, e.g. "/home/me/mwah" to list that directory
@@ -94,7 +76,9 @@ inline TCMap GetDatabaseFiles(const std::string & db_path, const bool & verbose)
             std::string current_file = itr->path().string();
             
             //Split by directory path and return a vector of the split
-            TSVector split_lines = Split(current_file,'/');
+            //TSVector split_lines = Split(current_file,'/');
+            TSVector split_lines;
+            boost::split(split_lines,current_file,boost::is_any_of("/"));
             
             //Then we get the last thing in there to get the filename
             std::string file_name = split_lines.back();
@@ -320,7 +304,7 @@ int main(int argc, char const ** argv)
 
 
     //Got the properties container and it rocks
-    //Todo Put this in it's own function
+    /*Todo Put this in it's own function
     TProperties VGenePropertiesContainer;
 
     //Todo properties should come from argument
@@ -351,6 +335,7 @@ int main(int argc, char const ** argv)
     		std::cout << itr2->first << "\t" << itr2->second << "\t";
     	}
     }
+	*/
 
     /////////////////
     //INPUT SECTION//

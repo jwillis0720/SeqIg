@@ -12,9 +12,10 @@
 #include "StructDefs.h"
 
 //Constructor
-DatabaseHandler::DatabaseHandler(std::string const &Databasename){
-    _dbname = Databasename.c_str();
-}
+DatabaseHandler::DatabaseHandler(std::string const &Databasename):
+	_dbname(Databasename.c_str()),
+	_rresult(0)
+{}
 
 void DatabaseHandler::Open(){
     

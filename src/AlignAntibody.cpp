@@ -14,13 +14,12 @@
 AlignAntibody::AlignAntibody(seqan::CharString const & id,
                              seqan::Dna5String const & seq,
                              Tdbcontainer const & dbcontainer,
-                             bool const & verbose)
+                             bool const & verbose):
+		_current_seq(seq),
+		_verbose(verbose),
+		_current_id(id)
+
 {
-    //take in references and assign them to member variables
-    _current_seq = seq;
-    _current_id = id;
-    _verbose = verbose;
-    
     /*I don't know what this number should be yet, but it should default to something
      that will not return an alignment unless it beats this score */
     _top_score = -1000;

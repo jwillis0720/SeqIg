@@ -9,70 +9,70 @@
 #include <seqan/translation.h>
 
 //Constructor One if we have just V and J Gene
-AntibodyJunction::AntibodyJunction(AlignAntibody const & VGene, AlignAntibody const & JGene, Tds const & raw_sequence, bool const & verbose)
-{
-    //Verbose
-	_verbose = verbose;
+AntibodyJunction::AntibodyJunction(AlignAntibody const & VGene,
+		AlignAntibody const & JGene,
+		Tds const & raw_sequence,
+		bool const & verbose):
 
-	//VGene Members Assignment From AlignAntibody Class
-    _VGeneAlignment = VGene.GetTopAlignment();
-    _VGeneScore = VGene.GetTopScore();
-    _VGeneGene = VGene.GetTopGene();
-    _VGeneGeneStart = VGene.GetBeginGeneMatch();
-    _VGeneGeneEnd = VGene.GetEndGeneMatch();
-    _VGeneQueryStart = VGene.GetBeginGeneMatch();
-    _VGeneQueryEnd= VGene.GetEndQueryMatch();
+    //VGene Members Assignment From AlignAntibody Class
+    _VGeneAlignment(VGene.GetTopAlignment()),
+    _VGeneScore(VGene.GetTopScore()),
+    _VGeneGene(VGene.GetTopGene()),
+    _VGeneGeneStart(VGene.GetBeginGeneMatch()),
+    _VGeneGeneEnd(VGene.GetEndGeneMatch()),
+    _VGeneQueryStart(VGene.GetBeginGeneMatch()),
+    _VGeneQueryEnd(VGene.GetEndQueryMatch()),
 
     //JGene Members Assignment From AlignAntibody Class
-    _JGeneAlignment = JGene.GetTopAlignment();
-    _JGeneAlignment = JGene.GetTopAlignment();
-    _JGeneScore = JGene.GetTopScore();
-    _JGeneGene = JGene.GetTopGene();
-    _JGeneGeneStart = JGene.GetBeginGeneMatch();
-    _JGeneGeneEnd = JGene.GetEndGeneMatch();
-    _JGeneQueryStart = JGene.GetBeginGeneMatch();
-    _JGeneQueryEnd= JGene.GetEndQueryMatch();
+    _JGeneAlignment(JGene.GetTopAlignment()),
+    _JGeneScore(JGene.GetTopScore()),
+    _JGeneGene(JGene.GetTopGene()),
+    _JGeneGeneStart(JGene.GetBeginGeneMatch()),
+    _JGeneGeneEnd(JGene.GetEndGeneMatch()),
+    _JGeneQueryStart(JGene.GetBeginGeneMatch()),
+    _JGeneQueryEnd(JGene.GetEndQueryMatch()),
 
-    _raw_sequence = raw_sequence;
+    _raw_sequence(raw_sequence),
+    _verbose(verbose)
+{
+
     _setVGeneQueryStartTranslation();
 
 };
 
-AntibodyJunction::AntibodyJunction(AlignAntibody const & VGene, AlignAntibody const & JGene,AlignAntibody const & DGene, Tds const & raw_sequence, bool const & verbose) {
+AntibodyJunction::AntibodyJunction(AlignAntibody const & VGene, AlignAntibody const & JGene,AlignAntibody const & DGene, Tds const & raw_sequence, bool const & verbose):
 
-	//Verbose
-	_verbose = verbose;
+    //VGene Members Assignment From AlignAntibody Class
+    _VGeneAlignment(VGene.GetTopAlignment()),
+    _VGeneScore(VGene.GetTopScore()),
+    _VGeneGene(VGene.GetTopGene()),
+    _VGeneGeneStart(VGene.GetBeginGeneMatch()),
+    _VGeneGeneEnd(VGene.GetEndGeneMatch()),
+    _VGeneQueryStart(VGene.GetBeginGeneMatch()),
+    _VGeneQueryEnd(VGene.GetEndQueryMatch()),
 
-	//VGene Members Assignment From AlignAntibody Class
-    _VGeneAlignment = VGene.GetTopAlignment();
-    _VGeneScore = VGene.GetTopScore();
-    _VGeneGene = VGene.GetTopGene();
-    _VGeneGeneStart = VGene.GetBeginGeneMatch();
-    _VGeneGeneEnd = VGene.GetEndGeneMatch();
-    _VGeneQueryStart = VGene.GetBeginGeneMatch();
-    _VGeneQueryEnd = VGene.GetEndQueryMatch();
-    
     //DGene Members Assignment From AlignAntibody Class
-    _DGeneAlignment = DGene.GetTopAlignment();
-    _DGeneAlignment = DGene.GetTopAlignment();
-    _DGeneScore = DGene.GetTopScore();
-    _DGeneGene = DGene.GetTopGene();
-    _DGeneGeneStart = DGene.GetBeginGeneMatch();
-    _DGeneGeneEnd = DGene.GetEndGeneMatch();
-    _DGeneQueryStart = DGene.GetBeginGeneMatch();
-    _DGeneQueryEnd= DGene.GetEndQueryMatch();
+    _DGeneAlignment(DGene.GetTopAlignment()),
+    _DGeneScore(DGene.GetTopScore()),
+    _DGeneGene(DGene.GetTopGene()),
+    _DGeneGeneStart(DGene.GetBeginGeneMatch()),
+    _DGeneGeneEnd(DGene.GetEndGeneMatch()),
+    _DGeneQueryStart(DGene.GetBeginGeneMatch()),
+    _DGeneQueryEnd(DGene.GetEndQueryMatch()),
     
     //JGene Members Assignment From AlignAntibody Class
-    _JGeneAlignment = JGene.GetTopAlignment();
-    _JGeneAlignment = JGene.GetTopAlignment();
-    _JGeneScore = JGene.GetTopScore();
-    _JGeneGene = JGene.GetTopGene();
-    _JGeneGeneStart = JGene.GetBeginGeneMatch();
-    _JGeneGeneEnd = JGene.GetEndGeneMatch();
-    _JGeneQueryStart = JGene.GetBeginGeneMatch();
-    _JGeneQueryEnd= JGene.GetEndQueryMatch();
+    _JGeneAlignment(JGene.GetTopAlignment()),
+    _JGeneScore(JGene.GetTopScore()),
+    _JGeneGene(JGene.GetTopGene()),
+    _JGeneGeneStart(JGene.GetBeginGeneMatch()),
+    _JGeneGeneEnd(JGene.GetEndGeneMatch()),
+    _JGeneQueryStart(JGene.GetBeginGeneMatch()),
+    _JGeneQueryEnd(JGene.GetEndQueryMatch()),
 
-    _raw_sequence = raw_sequence;
+    _raw_sequence(raw_sequence),
+    _verbose(verbose)
+
+{
     _setVGeneQueryStartTranslation();
     _setJunctions();
 
