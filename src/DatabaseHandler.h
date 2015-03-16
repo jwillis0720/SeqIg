@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __seqan_sandbox__DatabaseHandler__
-#define __seqan_sandbox__DatabaseHandler__
+#ifndef __DatabaseHandler__
+#define __DatabaseHandler__
 
 #include <stdio.h>
 #include <seqan/sequence.h>

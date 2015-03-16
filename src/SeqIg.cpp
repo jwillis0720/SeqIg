@@ -32,11 +32,9 @@
 // Author: Your Name jwillis0720@gmail.com>
 // ==========================================================================
 
+#include <sstream>
 #include "boost/filesystem.hpp"
 #include "boost/algorithm/string.hpp"
-
-#include <sstream>
-
 
 //Seqan Headers
 #include <seqan/basic.h>
@@ -50,61 +48,7 @@
 #include "StructDefs.h"
 #include "AlignAntibody.h"
 #include "AntibodyJunction.h"
-
-//An inline function to quickly check if a file or directory exists
-inline bool check_if_dir_exists (const std::string &name) {
-    struct stat buffer;
-    return (stat (name.c_str(), &buffer) == 0);
-}
-
-inline TCMap GetDatabaseFiles(const std::string & db_path, const bool & verbose)
-{
-    //You could put any file path in here, e.g. "/home/me/mwah" to list that directory
-    boost::filesystem::path idbpath(db_path);
-    boost::filesystem::directory_iterator end_itr;
-    TCMap map_of_files;
-    
-    // cycle through the directory
-    //This used to not segfault!!!
-    //TODO -- Segfaults here
-    for (boost::filesystem::directory_iterator itr(idbpath); itr != end_itr; ++itr)
-    {
-        // If it's not a directory, list it. If you want to list directories too, just remove this check.
-        if (boost::filesystem::is_regular_file(itr->path()))
-        {
-            // assign current file name to current_file and echo it out to the console.
-            std::string current_file = itr->path().string();
-            
-            //Split by directory path and return a vector of the split
-            //TSVector split_lines = Split(current_file,'/');
-            TSVector split_lines;
-            boost::split(split_lines,current_file,boost::is_any_of("/"));
-            
-            //Then we get the last thing in there to get the filename
-            std::string file_name = split_lines.back();
-            
-            //Gene DB class will handle parsing this into memory
-            DatabaseHandler GeneDB(current_file);
-            //Try to open
-            try {
-                GeneDB.Open();
-                if(verbose)
-                {
-                    std::cout << "Loading DB at -> " << current_file << std::endl;
-                    GeneDB.PrintPretty();
-                }
-            }catch(DatabaseHandlerExceptions &msg){
-                std::cerr << "Couldn't open Database file" << std::endl;
-                std::cerr << msg.what();
-                exit(1);
-            }
-            seqan::CharString sub_file = file_name.substr(0, file_name.size()-6);
-            map_of_files[sub_file] = GeneDB.GetDbContainer();
-        }
-    }
-    return map_of_files;
-}
-
+#include "Utility.h"
 
 //Setup Argument Parser takes the parser class and adds all the arguments to it
 void SetUpArgumentParser(seqan::ArgumentParser & parser)
@@ -173,7 +117,7 @@ seqan::ArgumentParser::ParseResult ExtractOptions(seqan::ArgumentParser const & 
     bool rfn = getOptionValue(options.input_file,parser,"input_file");
     
     //Check if the database path set by user exists
-    if(!check_if_dir_exists(options.database_path)){
+    if(!Utility::check_if_dir_exists(options.database_path)){
         std::cerr << "\n Can't find database path " << options.database_path << std::endl;
         return seqan::ArgumentParser::PARSE_ERROR;
     }
@@ -206,7 +150,7 @@ void SetDatabaseFastas(SeqIgOptions const &options, DatabasePaths &dbpaths)
                     "/" + options.species;
     dbpaths.Vgene_db = top_level_dir + "/V";
     dbpaths.Vgene_family = dbpaths.Vgene_db + "/family.fasta";
-    dbpaths.Vgene_files = GetDatabaseFiles(dbpaths.Vgene_db + "/genes/", options.verbose);
+    dbpaths.Vgene_files = Utility::GetDatabaseFiles(dbpaths.Vgene_db + "/genes/", options.verbose);
     dbpaths.Dgene_db = top_level_dir + "/D";
     dbpaths.Dgene_family = dbpaths.Dgene_db  + "/family.fasta";
     //dbpaths.Dgene_files = GetDatabaseFiles(dbpaths.Dgene_db + "/genes/", options.verbose);
@@ -217,8 +161,9 @@ void SetDatabaseFastas(SeqIgOptions const &options, DatabasePaths &dbpaths)
 //The main method runs the executable for those new to C++
 int main(int argc, char const ** argv)
 {
+
     //Structures defined in StructDefs, options and the resulting db paths
-    SeqIgOptions options;
+	SeqIgOptions options;
     DatabasePaths dbpaths;
     
     // Parse the command line.

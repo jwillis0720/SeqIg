@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __seqan_sandbox__AlignAntibody__
-#define __seqan_sandbox__AlignAntibody__
+#ifndef __AlignAntibody__
+#define __AlignAntibody__
 
 #include <stdio.h>
 #include <seqan/sequence.h>

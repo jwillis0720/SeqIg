@@ -8,11 +8,13 @@
 #ifndef SRC_PROPERTIESHANDLER_H_
 #define SRC_PROPERTIESHANDLER_H_
 
+#include <sstream>
 #include <stdio.h>
 #include <seqan/sequence.h>
 #include "SeqIg.h"
 #include "StructDefs.h"
-#include <sstream>
+#include "boost/algorithm/string.hpp"
+
 
 
 class PropertiesHandler

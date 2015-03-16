@@ -11,7 +11,6 @@
 //#include <seqan/translation.h>
 #include <stdio.h>
 #include "AlignAntibody.h"
-#include "SeqIgUtility.h"
 #include "StructDefs.h"
 
 class AntibodyJunction

@@ -5,8 +5,6 @@
  *      Author: jordanwillis
  */
 #include "PropertiesHandler.h"
-#include "SeqIgUtility.h"
-#include "boost/algorithm/string.hpp"
 
 PropertiesHandler::PropertiesHandler(std::string const & path):
 	_ppath(path)
@@ -34,7 +32,6 @@ PropertiesHandler::PropertiesHandler(std::string const & path):
 
 
 }
-
 void PropertiesHandler::PrintPretty(){
 	TProperties::iterator itr1;
 	std::map<Tcs,int>::iterator itr2;
