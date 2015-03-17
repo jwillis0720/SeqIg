@@ -26,7 +26,7 @@ private :
 public:
     PropertiesHandler(std::string const &);
     ~PropertiesHandler(){};
-    void Open();
+    TProperties GetProperties();
     void PrintPretty();
 };
 

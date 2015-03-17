@@ -49,6 +49,7 @@
 #include "AlignAntibody.h"
 #include "AntibodyJunction.h"
 #include "Utility.h"
+#include "PropertiesHandler.h"
 
 //Setup Argument Parser takes the parser class and adds all the arguments to it
 void SetUpArgumentParser(seqan::ArgumentParser & parser)
@@ -155,6 +156,7 @@ void SetDatabaseFastas(SeqIgOptions const &options, DatabasePaths &dbpaths)
     dbpaths.Dgene_family = dbpaths.Dgene_db  + "/family.fasta";
     //dbpaths.Dgene_files = GetDatabaseFiles(dbpaths.Dgene_db + "/genes/", options.verbose);
     dbpaths.Jgene_family = top_level_dir + "/J/family.fasta";
+    dbpaths.properties_path = options.database_path + "/" + options.receptor + "/"  "Properties.tsv";
 };
 
 
@@ -162,7 +164,7 @@ void SetDatabaseFastas(SeqIgOptions const &options, DatabasePaths &dbpaths)
 int main(int argc, char const ** argv)
 {
 
-    //Structures defined in StructDefs, options and the resulting db paths
+	//Structures defined in StructDefs, options and the resulting db paths
 	SeqIgOptions options;
     DatabasePaths dbpaths;
     
@@ -246,8 +248,17 @@ int main(int argc, char const ** argv)
         DFamilyContainer = DGeneDB.GetDbContainer();
     }
     
-
-
+    TProperties PropertiesHolder;
+    try
+    {
+    	PropertiesHandler Properties(dbpaths.properties_path);
+    	PropertiesHolder = Properties.GetProperties();
+    	if(options.verbose)
+    		Properties.PrintPretty();
+    }catch (PropertiesHandlerExceptions &msg){
+    	std::cout << "Something wrong with properties\n" << msg.what();
+    	exit(1);
+    }
     //Got the properties container and it rocks
     /*Todo Put this in it's own function
     TProperties VGenePropertiesContainer;
@@ -350,7 +361,7 @@ int main(int argc, char const ** argv)
             
             try
             {
-            	AntibodyJunction AJ(VGeneAlign,JGeneAlign, DFamilyAlign, seq, options.verbose);
+            	AntibodyJunction AJ(VGeneAlign,JGeneAlign, DFamilyAlign, seq, PropertiesHolder,options.verbose);
             }catch(AntibodyJunctionException &msg) {
                 std::cerr << "Problem with id -> " << id << std::endl;
                 std::cerr << msg.what() << std::endl;

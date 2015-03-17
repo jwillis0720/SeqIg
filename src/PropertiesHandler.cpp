@@ -42,3 +42,12 @@ void PropertiesHandler::PrintPretty(){
 		}
 	}
 }
+
+TProperties PropertiesHandler::GetProperties(){
+	return _VGenePropertiesContainer;
+}
+
+
+
+
+

@@ -68,6 +68,7 @@ struct DatabasePaths
     std::string Dgene_db;
     std::string Dgene_family;
     std::string Jgene_family;
+    std::string properties_path;
     TCMap Vgene_files;
     TCMap Dgene_files;
 };

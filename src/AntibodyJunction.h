@@ -54,6 +54,8 @@ private:
     //verbose
     bool _verbose;
 
+    TProperties _vproperties;
+
     //private funcs
     void _setVGeneQueryStartTranslation();
     void _setJunctions();
@@ -61,9 +63,9 @@ private:
 public:
 
     //V and J
-    AntibodyJunction(AlignAntibody const &, AlignAntibody const &, Tds const &, bool const &);
+    AntibodyJunction(AlignAntibody const &, AlignAntibody const &, Tds const &, TProperties const &,bool const &);
     //V D and J
-    AntibodyJunction(AlignAntibody const &, AlignAntibody const &, AlignAntibody const &, Tds const &, bool const &);
+    AntibodyJunction(AlignAntibody const &, AlignAntibody const &, AlignAntibody const &, Tds const &, TProperties const & , bool const &);
     ~AntibodyJunction() {};
 
 
