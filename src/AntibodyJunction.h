@@ -47,9 +47,11 @@ private:
     Tds _raw_sequence;
 
     //Newly assigned Variables
-    int _VGeneQueryStartTranslation;
     Tds _EntireAntibodySeq;
     TAASeq _AbAASeq;
+    TJunctionsSE _JunctionStart_Ends;
+    TJunctionsNuc _JunctionsNuc;
+	TJunctionsAA _JunctionsAA;
     
     //verbose
     bool _verbose;
@@ -59,6 +61,7 @@ private:
     //private funcs
     void _setVGeneQueryStartTranslation();
     void _setJunctions();
+    void _setJunctionLenghts(std::string const &, int const &, int const &);
 
 public:
 

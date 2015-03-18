@@ -45,7 +45,9 @@ typedef TSMap::const_iterator TSMapIterator;
 typedef seqan::StringSet<seqan::String<seqan::AminoAcid>, seqan::Owner<seqan::ConcatDirect<> > > TAASeq;
 typedef std::vector<std::string> TSVector;
 typedef std::map<Tcs,std::map<Tcs,int> > TProperties;
-
+typedef std::map<std::string, std::pair<int, int> > TJunctionsSE;
+typedef std::map<std::string,  Tcs> TJunctionsNuc;
+typedef std::map<std::string,  Tcs> TJunctionsAA;
 //alignment
 typedef seqan::Align<seqan::Dna5String,seqan::ArrayGaps> TAlignmnet;
 

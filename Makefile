@@ -2,7 +2,7 @@
 GXX = clang++
 CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix build/,$(notdir $(CPP_FILES:.cpp=.o)))
-CC_FLAGS += -MMD -Wall -Wno-deprecated-declarations
+CC_FLAGS += -MMD -Wall -Wno-deprecated-declarations -Wno-reorder
 CC_FLAGS += -g
 CC_FLAGS +=-I./include/
 CC_FLAGS +=-I/usr/local/include/
