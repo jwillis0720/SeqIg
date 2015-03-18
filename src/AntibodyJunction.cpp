@@ -144,7 +144,7 @@ void AntibodyJunction::_setJunctions() {
 	int fw3_length = fw3_e - fw3_s;
 
 
-	//Do all the tests to figure out where the Query starts
+	//Do all the tests to figure out where the Query starts and assign junctions
 	if(_VGeneGeneStart >= fw1_s && _VGeneGeneStart <= fw1_e){
 		start_block = "FW1";
 		int q_fw1_start = _VGeneQueryStart;
@@ -182,24 +182,41 @@ void AntibodyJunction::_setJunctions() {
 
 	else if(_VGeneGeneStart >= fw2_s && _VGeneGeneStart <= fw2_e){
 		start_block = "FW2";
-//		_setJunctionLenghts("fw2",start,end);
-//		_setJunctionLenghts("cdr2",start,end);
-//		_setJunctionLenghts("fw3",start,end);
+		int q_fw2_start = _VGeneQueryStart;
+		int q_fw2_end = _VGeneQueryStart + (fw2_e - _VGeneGeneStart);
+		int q_cdr2_start = q_fw2_end;
+		int q_cdr2_end = q_cdr2_start + cdr2_length + 1;
+		int q_fw3_start = q_cdr2_end;
+		int q_fw3_end = q_fw3_start + fw3_length + 1;
+		_setJunctionLenghts("FW2", q_fw2_start, q_fw2_end);
+		_setJunctionLenghts("CDR2", q_cdr2_start, q_cdr2_end);
+		_setJunctionLenghts("FW3", q_fw3_start, q_fw3_end);
 	}
 
 
 	else if(_VGeneGeneStart >= cdr2_s && _VGeneGeneStart <= cdr2_e){
 		start_block = "CDR2";
-//		_setJunctionLenghts("cdr2",start,end);
-//		_setJunctionLenghts("fw3",start,end);
+		int q_cdr2_start = _VGeneQueryStart;
+		int q_cdr2_end = _VGeneQueryStart + (cdr2_e - _VGeneGeneStart);
+		int q_fw3_start = q_cdr2_end;
+		int q_fw3_end = q_fw3_start + fw3_length + 1;
+		_setJunctionLenghts("CDR2", q_cdr2_start, q_cdr2_end);
+		_setJunctionLenghts("FW3", q_fw3_start, q_fw3_end);
 	}
 
 	else if(_VGeneGeneStart >= fw3_s && _VGeneGeneStart <= fw3_e){
 		start_block = "FW3";
-//		_setJunctionLenghts("fw3",start,end);
+		int q_fw3_start = _VGeneQueryStart;
+		int q_fw3_end = _VGeneQueryStart + (fw3_e - _VGeneGeneStart);
+		_setJunctionLenghts("FW3", q_fw3_start, q_fw3_end);
 	}
 
-	else if(_VGeneGeneStart >= cdr3_s) start_block = "CDR3";
+	else if(_VGeneGeneStart >= cdr3_s){
+		start_block = "CDR3";
+		int q_cdr3_start = _VGeneQueryStart;
+		int q_vh_end = _VGeneQueryEnd;
+		_setJunctionLenghts("CDR3_v", q_cdr3_start, q_vh_end);
+	}
 	else start_block = "Unresolved";
 
 	TJunctionsSE::iterator itrSE;
