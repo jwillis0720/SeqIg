@@ -126,7 +126,7 @@ void AntibodyJunction::_setJunctions() {
 
 	std::string start_block = "";
 
-	int fw1_s = _vproperties["IGHV3-33*01"]["FR1s"];
+	int fw1_s = _vproperties[_VGeneGene]["FR1s"];
 	int fw1_e = _vproperties[_VGeneGene]["FR1e"];
 	int cdr1_s = _vproperties[_VGeneGene]["CDR1s"];
 	int cdr1_e = _vproperties[_VGeneGene]["CDR1e"];
@@ -148,7 +148,7 @@ void AntibodyJunction::_setJunctions() {
 	if(_VGeneGeneStart >= fw1_s && _VGeneGeneStart <= fw1_e){
 		start_block = "FW1";
 		int q_fw1_start = _VGeneQueryStart;
-		int q_fw1_end = _VGeneQueryStart + (fw1_e - _VGeneGeneStart);
+		int q_fw1_end = _VGeneQueryStart + (fw1_e - _VGeneGeneStart) + 1;
 		int q_cdr1_start = q_fw1_end;
 		int q_cdr1_end = q_fw1_end + cdr1_length + 1;
 		int q_fw2_start = q_cdr1_end;
@@ -219,6 +219,7 @@ void AntibodyJunction::_setJunctions() {
 	}
 	else start_block = "Unresolved";
 
+	std::cout << start_block << std::endl;
 	TJunctionsSE::iterator itrSE;
 	TJunctionsNuc::iterator itrNuc;
 	TJunctionsAA::iterator itrAA;
