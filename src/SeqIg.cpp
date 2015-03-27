@@ -50,6 +50,7 @@
 #include "AntibodyJunction.h"
 #include "Utility.h"
 #include "PropertiesHandler.h"
+#include "OutputHandler.h"
 
 //Setup Argument Parser takes the parser class and adds all the arguments to it
 void SetUpArgumentParser(seqan::ArgumentParser & parser)
@@ -81,6 +82,12 @@ void SetUpArgumentParser(seqan::ArgumentParser & parser)
     addSection(parser, "Input Options");
     addOption(parser, seqan::ArgParseOption("f","input_file",
                                             "The input file to be considered",seqan::ArgParseOption::INPUTFILE));
+
+    //Output
+     addSection(parser, "Output Options");
+     addOption(parser, seqan::ArgParseOption("o","output_file",
+     										"The output file name", seqan::ArgParseOption::STRING));
+
     //Set valid values for all options
     setValidValues(parser, "receptor", "Ig TCR");
     setValidValues(parser, "chain", "heavy lambda kappa");
@@ -94,6 +101,7 @@ void SetUpArgumentParser(seqan::ArgumentParser & parser)
     setDefaultValue(parser, "receptor", "Ig");
     setDefaultValue(parser, "chain", "heavy");
     setDefaultValue(parser, "species", "human");
+    setDefaultValue(parser, "output_file", "SeqIgOutput.csv");
 }
 
 
@@ -110,6 +118,7 @@ seqan::ArgumentParser::ParseResult ExtractOptions(seqan::ArgumentParser const & 
     bool rr = getOptionValue(options.receptor,parser, "receptor");
     bool rc = getOptionValue(options.chain, parser, "chain");
     bool rs = getOptionValue(options.species, parser, "species");
+    getOptionValue(options.output_file, parser, "output_file");
     
     //This is an actual bool option
     options.verbose = isSet(parser,"verbose");
@@ -259,39 +268,10 @@ int main(int argc, char const ** argv)
     	std::cout << "Something wrong with properties\n" << msg.what();
     	exit(1);
     }
-    //Got the properties container and it rocks
-    /*Todo Put this in it's own function
-    TProperties VGenePropertiesContainer;
 
-    //Todo properties should come from argument
-    std::ifstream ifs("properties.txt");
-    std::string line;
-    while(std::getline(ifs,line))
-    {
-    	TSVector split_lines = Split(line,'\t');
-    	if(split_lines[0] == "#Gene") continue;
-    	VGenePropertiesContainer[split_lines[0]]["FR1s"] = atoi(split_lines[1].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["FR1e"] = atoi(split_lines[2].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["CDR1s"] = atoi(split_lines[3].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["CDR1e"] = atoi(split_lines[4].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["FR2s"] = atoi(split_lines[5].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["FR2e"] = atoi(split_lines[6].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["CDR2s"] = atoi(split_lines[7].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["CDR2e"] = atoi(split_lines[8].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["FR3s"] = atoi(split_lines[9].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["FR3e"] = atoi(split_lines[10].c_str());
-    	VGenePropertiesContainer[split_lines[0]]["CDR3s"] = atoi(split_lines[10].c_str());
-    }
+    //Open up CSV and Write out headers
 
-    TProperties::iterator itr1;
-    std::map<Tcs,int>::iterator itr2;
-    for(itr1 = VGenePropertiesContainer.begin(); itr1 != VGenePropertiesContainer.end(); itr1++){
-    	std::cout << "\n" << itr1->first << "\t";
-    	for(itr2 = itr1->second.begin() ; itr2 != itr1->second.end(); itr2++){
-    		std::cout << itr2->first << "\t" << itr2->second << "\t";
-    	}
-    }
-	*/
+    Output::WriteOutHeaders(options.output_file.c_str());
 
     /////////////////
     //INPUT SECTION//
