@@ -1,0 +1,1 @@
+/Users/jordanwillis/GitRepos/seqig_standalone/CMakeFiles/SeqIg.dir

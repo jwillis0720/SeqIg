@@ -1,0 +1,1 @@
+Name,RawQuerys,NucSequence,AASequence,Top_V_Gene,Top_D_Gene,Top_J_Gene,VScore,DScore,JScore,FW1,FW2,FW3,CDR1,CDR2,FW1_AA,FW2_AA,FW3_AA,CDR1_AA,CDR2_AA

@@ -6,13 +6,16 @@
 //
 //
 
-#ifndef __DatabaseHandler__
-#define __DatabaseHandler__
-
 #include <stdio.h>
 #include <seqan/sequence.h>
 #include "SeqIg.h"
 #include "StructDefs.h"
+
+
+#ifndef __DatabaseHandler__
+#define __DatabaseHandler__
+
+
 
 class DatabaseHandler
 {

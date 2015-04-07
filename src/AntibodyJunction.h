@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "AlignAntibody.h"
+#include "StructDefs.h"
 #ifndef ANTIBODYJUNCTION_H_
 #define ANTIBODYJUNCTION_H_
 
@@ -9,9 +12,7 @@
 //
 //
 //#include <seqan/translation.h>
-#include <stdio.h>
-#include "AlignAntibody.h"
-#include "StructDefs.h"
+
 
 class AntibodyJunction
 {

@@ -6,13 +6,15 @@
 //
 //
 
-#ifndef __AlignAntibody__
-#define __AlignAntibody__
-
 #include <stdio.h>
 #include <seqan/sequence.h>
 #include "DatabaseHandler.h"
 #include <seqan/align.h>
+
+#ifndef __AlignAntibody__
+#define __AlignAntibody__
+
+
 
 class AlignAntibody
 {

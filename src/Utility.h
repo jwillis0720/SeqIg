@@ -5,15 +5,16 @@
  *      Author: jordanwillis
  */
 
-#ifndef SRC_UTILITY_H_
-#define SRC_UTILITY_H_
-
-#include "boost/algorithm/string.hpp"
-#include "boost/filesystem.hpp"
+#include "StructDefs.h"
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
+#include <map>
+#include <seqan/basic.h>
+#include <seqan/sequence.h>
 #include "DatabaseHandler.h"
 
-
-
+#ifndef SRC_UTILITY_H_
+#define SRC_UTILITY_H_
 
 namespace Utility {
 	typedef std::map<seqan::CharString,char> Tcodonmap;
@@ -143,5 +144,13 @@ namespace Utility {
 
 	//Codon Table when we need it
 	Tcodonmap CodonTable = CreateCodonTable();
+
+	//csv header lines
+	static std::vector<std::string> Headerlines =  {
+			"Name", "RawQuerys","NucSequence","AASequence",
+			"Top_V_Gene","Top_D_Gene","Top_J_Gene", "VScore",
+			"DScore","JScore","FW1","FW2","FW3","CDR1","CDR2",
+			"FW1_AA","FW2_AA","FW3_AA", "CDR1_AA","CDR2_AA"};
+
 }
 #endif /* SRC_UTILITY_H_ */

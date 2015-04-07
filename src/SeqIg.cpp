@@ -32,25 +32,8 @@
 // Author: Your Name jwillis0720@gmail.com>
 // ==========================================================================
 
-#include <sstream>
-#include "boost/filesystem.hpp"
-#include "boost/algorithm/string.hpp"
-
-//Seqan Headers
-#include <seqan/basic.h>
-#include <seqan/seq_io.h>
-#include <seqan/sequence.h>
-#include <seqan/arg_parse.h>
-
-//Project Headers
-#include "DatabaseHandler.h"
 #include "SeqIg.h"
-#include "StructDefs.h"
-#include "AlignAntibody.h"
-#include "AntibodyJunction.h"
-#include "Utility.h"
-#include "PropertiesHandler.h"
-#include "OutputHandler.h"
+
 
 //Setup Argument Parser takes the parser class and adds all the arguments to it
 void SetUpArgumentParser(seqan::ArgumentParser & parser)
@@ -270,8 +253,15 @@ int main(int argc, char const ** argv)
     }
 
     //Open up CSV and Write out headers
-
-    Output::WriteOutHeaders(options.output_file.c_str());
+    csv::ofstream Outputstream(options.output_file.c_str(),std::ios_base::out);
+    Outputstream.set_delimiter(',');
+    if(Outputstream.is_open()) {
+        for (std::vector<std::string>::iterator it = Utility::Headerlines.begin();
+             it != Utility::Headerlines.end(); ++it) {
+            Outputstream << *it;
+        }
+        Outputstream << NEWLINE;
+    }
 
     /////////////////
     //INPUT SECTION//
