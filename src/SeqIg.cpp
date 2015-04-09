@@ -92,7 +92,7 @@ void SetUpArgumentParser(seqan::ArgumentParser & parser) {
     setRequired(parser, "f");
 
     //Set Database Default Values
-    setDefaultValue(parser, "database_path", "/Users/jordanwillis/GitRepos/seqig_standalone/seqig_data");
+    setDefaultValue(parser, "database_path", boost::filesystem::initial_path().string() + "/seqig_data");
     setDefaultValue(parser, "receptor", "Ig");
     setDefaultValue(parser, "chain", "heavy");
     setDefaultValue(parser, "species", "human");

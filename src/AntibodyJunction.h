@@ -10,9 +10,9 @@
 //
 //#include <seqan/translation.h>
 #include <stdio.h>
-#include "AlignAntibody.h"
 #include "StructDefs.h"
-
+#include "AlignAntibody.h"
+#include "AntibodyJunction.h"
 class AntibodyJunction
 {
 private:
