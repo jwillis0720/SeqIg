@@ -32,36 +32,31 @@
 // Author: Your Name jwillis0720@gmail.com>
 // ==========================================================================
 
-#include <sstream>
-#include "boost/filesystem.hpp"
-#include "boost/algorithm/string.hpp"
 
-//Seqan Headers
-#include <seqan/basic.h>
-#include <seqan/seq_io.h>
-#include <seqan/sequence.h>
-#include <seqan/arg_parse.h>
+//std
+#include <sstream>
+
+//boost
+#include "boost/filesystem.hpp"
 
 //Project Headers
-#include "DatabaseHandler.h"
 #include "SeqIg.h"
-#include "StructDefs.h"
 #include "AlignAntibody.h"
 #include "AntibodyJunction.h"
+
+//These can't be moved to the header and I can't figure out why!!!
+//Todo
 #include "Utility.h"
-#include "PropertiesHandler.h"
 #include "OutputHandler.h"
 
-//Setup Argument Parser takes the parser class and adds all the arguments to it
-void SetUpArgumentParser(seqan::ArgumentParser & parser)
-{
+void SetUpArgumentParser(seqan::ArgumentParser & parser) {
     //Basic info about the application
     setAppName(parser, "SeqIg");
     setShortDescription(parser, "SeqIg - Immunoglobulin Germline Gene Assignment");
     setCategory(parser, "Database Locations");
     setDate(parser, "December 2014");
-    
-    
+
+
     /*Database or sample options, basically asking what are the properties of your query,
     and making the database path from that*/
     addSection(parser, "Sample Options");
@@ -73,29 +68,29 @@ void SetUpArgumentParser(seqan::ArgumentParser & parser)
                                             "The chain type", seqan::ArgParseOption::STRING));
     addOption(parser, seqan::ArgParseOption("s","species",
                                             "The species type", seqan::ArgParseOption::STRING));
-    
+
     //Other options
     addSection(parser, "Other Options");
     addOption(parser, seqan::ArgParseOption("v","verbose","Verbose Output"));
-    
+
     //The required options like the input
     addSection(parser, "Input Options");
     addOption(parser, seqan::ArgParseOption("f","input_file",
                                             "The input file to be considered",seqan::ArgParseOption::INPUTFILE));
 
     //Output
-     addSection(parser, "Output Options");
-     addOption(parser, seqan::ArgParseOption("o","output_file",
-     										"The output file name", seqan::ArgParseOption::STRING));
+    addSection(parser, "Output Options");
+    addOption(parser, seqan::ArgParseOption("o","output_file",
+                                            "The output file name", seqan::ArgParseOption::STRING));
 
     //Set valid values for all options
     setValidValues(parser, "receptor", "Ig TCR");
     setValidValues(parser, "chain", "heavy lambda kappa");
     setValidValues(parser, "species", "human mouse rat llama rhesus");
-    
+
     //Set required - This should be an argument, but working with all options is so much easier, and I'm a madman
     setRequired(parser, "f");
-    
+
     //Set Database Default Values
     setDefaultValue(parser, "database_path", "/Users/jordanwillis/GitRepos/seqig_standalone/seqig_data");
     setDefaultValue(parser, "receptor", "Ig");
